@@ -8,32 +8,32 @@ module.exports = app => {
 
         var notes = JSON.parse(data);
 
-        app.get("/api/notes", (req, res) => {
+        app.get("/api/notes", function(req, res) {
             res.json(notes);
         });
 
-        app.post("/api/notes", (req, res) => {
-            let newNote =req.body;
+        app.post("/api/notes", function(req, res) {
+            let newNote = req.body;
             notes.push(newNote);
             updateDb();
             return console.log("New Note Added: " + newNote.title);
         });
 
-        app.get("/api/notes/:id", (req, res) => {
+        app.get("/api/notes/:id", function(req, res) {
             res.json(notes[req.params.id]);
         });
 
-        app.delete("/api/notes/:id", (req, res) => {
+        app.delete("/api/notes/:id", function(req, res) {
             notes.splice(req.params.id, 1);
             updateDb();
             console.log("Note Deleted: " + req.params.id);
         });
 
-        app.get("/notes", (req, res) => {
+        app.get("/notes", function(req, res) {
             res.sendFile(path.join(__dirname, "../public/notes.html"));
         });
 
-        app.get("*", (req, res) => {
+        app.get("*", function(req, res) {
             res.sendFile(path.join(__dirname, "../public/index.html"));
         });
 
