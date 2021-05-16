@@ -9,12 +9,12 @@ module.exports = app => {
         var notes = JSON.parse(data);
 
         // api/notes get routes
-        app.get("/api/notes", function(req, res) {
+        app.get("/api/notes", (req, res) => {
             res.json(notes);
         });
 
         // api/notes post route
-        app.post("/api/notes", function(req, res) {
+        app.post("/api/notes", (req, res) => {
             let newNote = req.body;
             notes.push(newNote);
             updateDb();
@@ -22,24 +22,24 @@ module.exports = app => {
         });
 
         // retrieve notes by id
-        app.get("/api/notes/:id", function(req, res) {
+        app.get("/api/notes/:id", (req, res) => {
             res.json(notes[req.params.id]);
         });
 
         // delete notes by id
-        app.delete("/api/notes/:id", function(req, res) {
+        app.delete("/api/notes/:id", (req, res) => {
             notes.splice(req.params.id, 1);
             updateDb();
             console.log("Note Deleted: " + req.params.id);
         });
 
         // retrieve / display notes.html
-        app.get("/notes", function(req, res) {
+        app.get("/notes", (req, res) => {
             res.sendFile(path.join(__dirname, "../public/notes.html"));
         });
 
         // retrieve /display index.html
-        app.get("*", function(req, res) {
+        app.get("*", (req, res) => {
             res.sendFile(path.join(__dirname, "../public/index.html"));
         });
 
