@@ -3,11 +3,12 @@ const fs = require("fs");
 const path = require("path");
 
 // initialize appp
-const app = express();
 const PORT = process.env.PORT || 3002;
+const app = express();
 
-// parse data
+// parse incoming array data
 app.use(express.urlencoded({ extended: true }));
+// parse incoming json data
 app.use(express.json());
 app.use(express.static(__dirname));
 
@@ -15,6 +16,6 @@ app.use(express.static(__dirname));
 require("./routes/appRoutes")(app);
 
 // listener
-app.listen(PORT, function() {
+app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
