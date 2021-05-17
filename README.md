@@ -11,4 +11,7 @@ Requires nodeJS (https://nodejs.org/)
 2. 
 - In command line, run "npm install". 
 - Can be run locally (run "npm start" or "npm server.js") in command line. Then open browser to "http://localhost:3002".
-- Can also be accessed remotely at "https://fierce-woodland-73672.herokuapp.com/".
+- Can also be accessed remotely at https://fierce-woodland-73672.herokuapp.com/.
+
+## Deployed
+App deployed at https://fierce-woodland-73672.herokuapp.com/.
