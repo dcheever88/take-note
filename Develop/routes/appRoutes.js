@@ -1,5 +1,7 @@
 const fs = require("fs");
 const path = require("path");
+var uniqid= require("uniqid");
+// let notes = require("d/db.json")
 
 module.exports = app => {
 
@@ -16,8 +18,9 @@ module.exports = app => {
         // api/notes post route
         app.post("/api/notes", (req, res) => {
             let newNote = req.body;
+            req.body.id = uniqid();
             notes.push(newNote);
-            updateDb();
+            updateDb(res);
             return console.log("New Note Added: " + newNote.title);
         });
 
@@ -28,8 +31,18 @@ module.exports = app => {
 
         // delete notes by id
         app.delete("/api/notes/:id", (req, res) => {
-            notes.splice(req.params.id, 1);
-            updateDb();
+            let {id} = req.params;
+            let note = notes.find(e => e.id === id);
+            // console.log(notes);
+            if (note) {
+                notes = notes.filter(e => {
+                    console.log(e);
+                    return e.id !== id;
+                });
+            }
+            // console.log(notes);
+            // console.log(id);
+            updateDb(res);
             console.log("Note Deleted: " + req.params.id);
         });
 
@@ -44,11 +57,12 @@ module.exports = app => {
         });
 
         // update json
-        function updateDb() {
-            fs.writeFile("db/db.json", JSON.stringify(notes, "\t"), err => {
+        function updateDb(res) {
+            fs.writeFileSync("db/db.json", JSON.stringify(notes, "\t"), err => {
                 if (err) throw err;
                 return true;
             });
+            res.end();
         }
     });
 }
